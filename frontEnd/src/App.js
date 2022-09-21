@@ -1,29 +1,23 @@
-// import { Switch } from '@mui/material';
-// import { Routes, Route } from 'react-router-dom';
-
-import Signin from "./LoginContainer/Signin";
-
-// import Home from './components/Home';
-// import About from './components/About';
-// import Blogs from './components/Blogs';
-
+import { BrowserRouter as Router } from "react-router-dom";
+import Navbar from "./components/navbar/Navbar";
+import { UsersData } from "./context/ContextProvider";
+import MainRoutes from "./routes/MainRoutes";
 
 function App() {
-  
   return (
     <>
- <Signin />
-     
-    {/* <Routes>
-      <Route exact path='/' element={<Home/>}/>
-      <Route exact path='/about' element={<About/>}/>
-      <Route exact path='/blogs' element={<Blogs/>}/>
-    </Routes> */}
-
- 
-      <h1>hello</h1>
+      <div className="bg-primary-HR min-h-screen">
+        <Router>
+          <UsersData>
+            <Navbar />
+            <div className="container  mx-auto ">
+              <MainRoutes />
+            </div>
+          </UsersData>
+        </Router>
+      </div>
     </>
-  )
+  );
 }
 
 export default App;
