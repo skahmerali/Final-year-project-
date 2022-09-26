@@ -13,7 +13,9 @@ const DropDown = ({
   // console.log({ captionKey });
   return (
     <>
-      <div className={`relative inline-flex rounded-xl shadow-xl ${style}`}>
+      <div
+        className={`relative inline-flex rounded-xl backdrop-blur-md shadow-md ${style}`}
+      >
         <svg
           className="w-3 h-4 absolute top-0 right-0 m-4 pointer-events-none"
           xmlns="http://www.w3.org/2000/svg"

@@ -21,23 +21,40 @@ const item = [
 const Signup = () => {
   const navigate = useNavigate();
   const { signData, setSignData } = useContext(UserContext);
-  const { token, setToken } = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
   const [field, setField] = useState("");
-  const handleChange = (e) => {
-    setSignData({
-      ...signData,
-      [e.target.name]: e.target.value,
-    });
-  };
+
+  const { token, setToken } = useContext(UserContext);
+  // const handleChange = (e) => {
+  //   setSignData({
+  //     ...signData,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
+  React.useEffect(() => {
+    console.log(signData, 1111);
+  }, [signData]);
+
   const Sign = async (e) => {
     e.preventDefault();
     // setToken(set)
+    setSignData({
+      email,
+      firstName,
+      lastName,
+      password,
+      field,
+    });
+    return signData;
   };
 
   return (
     <>
       <div className="flex-center">
-        <div className=" mt-20 rounded-md px-20 shadow-2xl bg-secondary-white ">
+        <div className=" mt-28 rounded-md py-2 px-20 shadow-2xl bg-secondary-white ">
           <h1 className="text-center text-3xl mt-3 font-bold">SignUp</h1>
           {/* <img className=" mt-2 w-16 ml-32" src="logo192.png"></img> */}
           <div className="mt-5">
@@ -51,7 +68,7 @@ const Signup = () => {
                   style="w-80"
                   type={"text"}
                   placeholder={"Enter Email"}
-                  onChange={handleChange}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   name={"Email"}
                 />
@@ -65,7 +82,7 @@ const Signup = () => {
                 <Input
                   type={"text"}
                   placeholder={"Enter First Name"}
-                  onChange={handleChange}
+                  onChange={(e) => setFirstName(e.target.value)}
                   name={"FirstName"}
                   required
                 />
@@ -79,7 +96,7 @@ const Signup = () => {
                 <Input
                   type={"text"}
                   placeholder={"Enter Last Name"}
-                  onChange={handleChange}
+                  onChange={(e) => setLastName(e.target.value)}
                   name={"LastName"}
                   required
                 />
@@ -93,7 +110,7 @@ const Signup = () => {
                 <Input
                   type={"password"}
                   placeholder={"Enter Password"}
-                  onChange={handleChange}
+                  onChange={(e) => setPassword(e.target.value)}
                   name={"Password"}
                   required
                 />
