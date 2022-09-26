@@ -3,7 +3,11 @@ var bcrypt = require("bcrypt-inzi");
 var jwt = require('jsonwebtoken');
 
 var SERVER_SECRET = process.env.SECRET || "3456";
+<<<<<<< HEAD
 var {userModle} = require("../dbrepo/modles")
+=======
+var {userModle} = require("./../dbrepo/db")
+>>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
 var api = express.Router()
 
 
@@ -12,7 +16,13 @@ api.post('/signup', (req, res, next) => {
     if (!req.body.userName
         || !req.body.userEmail
         || !req.body.userPhone
+<<<<<<< HEAD
         || !req.body.userPassword) {
+=======
+        || !req.body.userPassword
+        || !req.body.gender
+        || !req.body.department) {
+>>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
         res.status(403).send(`
         please send complete information
         e.g:
@@ -20,7 +30,14 @@ api.post('/signup', (req, res, next) => {
             "name": "xyz",
             "email": "xyz@gmail.com",
             "password": "1234",
+<<<<<<< HEAD
             "phone": "01312314",
+=======
+            "phone": "03462858293",
+            "gender": "male",
+            "department": "teacher"
+
+>>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
         }`);
         return
     };
@@ -33,6 +50,10 @@ api.post('/signup', (req, res, next) => {
 
         if (err) {
             console.log(err)
+<<<<<<< HEAD
+=======
+            // res.send(err)
+>>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
         } else if (!data) {
 
             bcrypt.stringToHash(req.body.userPassword).then(function (HashPassword) {
@@ -41,6 +62,11 @@ api.post('/signup', (req, res, next) => {
                     "email": req.body.userEmail,
                     "password": HashPassword,
                     "phone": req.body.userPhone,
+<<<<<<< HEAD
+=======
+                    "gender": req.body.userGender,
+                    "department" : req.body.userDepartment
+>>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
                 });
 
                 newUaser.save((err, data) => {
@@ -60,9 +86,15 @@ api.post('/signup', (req, res, next) => {
             })
 
 
+<<<<<<< HEAD
         } else if (err){
             res.status(500).send({
                 message:"db error"
+=======
+        } else if (err) {
+            res.status(500).send({
+                message: "db error"
+>>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
             })
         } else {
 
@@ -157,7 +189,11 @@ api.post("/login", (req, res, next) => {
 
 
 
+<<<<<<< HEAD
 api.post("/logout",(req, res, next) =>{
+=======
+api.post("/logout", (req, res, next) => {
+>>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
 
     res.cookie('jToken', "", {
         maxAge: 86_400_000,

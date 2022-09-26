@@ -1,9 +1,17 @@
 
+<<<<<<< HEAD
 let dbURI = "";
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 
 
+=======
+let dbURI = "mongodb+srv://ahmerali:ahmerali@cluster0.slkv6.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+
+
+// mongodb+srv://ahmerali:ahmerali@cluster0.slkv6.mongodb.net/ahmerali
+>>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
 
 var mongoose = require('mongoose');
 
