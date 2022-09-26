@@ -12,8 +12,8 @@ function App() {
   
   return (
     <>
- <Signin />
-     
+ {/* <Signin /> */}
+     <h1>COMING SOON.......</h1>
     {/* <Routes>
       <Route exact path='/' element={<Home/>}/>
       <Route exact path='/about' element={<About/>}/>

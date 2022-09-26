@@ -7,12 +7,13 @@ var jwt = require('jsonwebtoken');
 var cookieParser = require('cookie-parser');
 
 var {userModle} = require("./dbrepo/db");
-var authRoutes = require("./routes/auth")
+var authRoutes = require("./auth/auth")
 console.log(userModle)
 
 var SERVER_SECRET = process.env.SECRET || "3456";
 
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
+const PORT = "https://skdigitech-education--system.herokuapp.com" || 5000;
 
 
 var app = express()

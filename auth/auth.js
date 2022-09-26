@@ -3,7 +3,7 @@ var bcrypt = require("bcrypt-inzi");
 var jwt = require('jsonwebtoken');
 
 var SERVER_SECRET = process.env.SECRET || "3456";
-var {userModle} = require("../dbrepo/modles")
+var {userModle} = require("./../dbrepo/db")
 var api = express.Router()
 
 
@@ -12,7 +12,9 @@ api.post('/signup', (req, res, next) => {
     if (!req.body.userName
         || !req.body.userEmail
         || !req.body.userPhone
-        || !req.body.userPassword) {
+        || !req.body.userPassword
+        || !req.body.gender
+        || !req.body.department) {
         res.status(403).send(`
         please send complete information
         e.g:
@@ -20,7 +22,10 @@ api.post('/signup', (req, res, next) => {
             "name": "xyz",
             "email": "xyz@gmail.com",
             "password": "1234",
-            "phone": "01312314",
+            "phone": "03462858293",
+            "gender": "male",
+            "department": "teacher"
+
         }`);
         return
     };
@@ -33,6 +38,7 @@ api.post('/signup', (req, res, next) => {
 
         if (err) {
             console.log(err)
+            // res.send(err)
         } else if (!data) {
 
             bcrypt.stringToHash(req.body.userPassword).then(function (HashPassword) {
@@ -41,6 +47,8 @@ api.post('/signup', (req, res, next) => {
                     "email": req.body.userEmail,
                     "password": HashPassword,
                     "phone": req.body.userPhone,
+                    "gender": req.body.userGender,
+                    "department" : req.body.userDepartment
                 });
 
                 newUaser.save((err, data) => {
@@ -60,9 +68,9 @@ api.post('/signup', (req, res, next) => {
             })
 
 
-        } else if (err){
+        } else if (err) {
             res.status(500).send({
-                message:"db error"
+                message: "db error"
             })
         } else {
 
@@ -157,7 +165,7 @@ api.post("/login", (req, res, next) => {
 
 
 
-api.post("/logout",(req, res, next) =>{
+api.post("/logout", (req, res, next) => {
 
     res.cookie('jToken', "", {
         maxAge: 86_400_000,
