@@ -19,7 +19,7 @@ const SubNav = () => {
   return (
     <>
       <div className="flex-center ">
-        <div className="h-28 px-24 py-9 mt-20 bg-primary-HR fixed top-0 left-0 right-0 ">
+        <div className="h-20 px-24 py-7 mt-16 outline-none bg-primary-HR/90 fixed top-0 left-0 right-0 ">
           <div className="flex flex-row justify-between">
             <div>
               <SearchBar />

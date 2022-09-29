@@ -8,18 +8,19 @@ import { useNavigate } from "react-router-dom";
 // import HomeNews from "../../../components/homeNews/HomeNews";
 // import HomeBlog from "../../../components/homeBlog/HomeBlog";
 import Blogs from "../blog/Blogs";
+import Footer from "../footer/Footer";
+import About from "../about/About";
+import Contact from "../contact/Contact";
 
 export default function Home() {
   return (
     <div>
       <SubNav />
-      <Blogs />
-      {/* <div className="mt-20 ml-20 px-2 "> */}
-      {/* <h1>skjsjh</h1> */}
-      {/* <HomeNews /> */}
-      {/* <HomeBlog /> */}
-      {/* <Blogs /> */}
-      {/* </div> */}
+      <HomeNews />
+      <HomeBlog />
+      <About />
+      <Contact />
+      <Footer />
     </div>
   );
 }

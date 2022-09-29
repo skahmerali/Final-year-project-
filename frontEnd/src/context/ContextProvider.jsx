@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { UserContext } from "./Context";
 
 export const UsersData = (props) => {
-  const [loginData, setLoginData] = useState({});
-  const [signData, setSignData] = useState({});
+  const [loginData, setLoginData] = useState(null);
+  const [signData, setSignData] = useState();
   const [token, setToken] = useState("");
   const userDetails = {
     loginData,
@@ -14,6 +14,10 @@ export const UsersData = (props) => {
     token,
     setToken,
   };
+
+  useEffect(() => {
+    console.log(loginData, 999);
+  }, [loginData]);
   return (
     <UserContext.Provider value={userDetails}>
       {props.children}
