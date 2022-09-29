@@ -6,9 +6,8 @@ import MainRoutes from "./routes/MainRoutes";
 function App() {
   return (
     <>
-<<<<<<< HEAD
  {/* <Signin /> */}
-     <h1>COMING SOON.......</h1>
+     {/* <h1>COMING SOON.......</h1> */}
     {/* <Routes>
       <Route exact path='/' element={<Home/>}/>
       <Route exact path='/about' element={<About/>}/>
@@ -16,8 +15,8 @@ function App() {
     </Routes> */}
 
  
-      <h1>hello</h1>
-=======
+      {/* <h1>hello</h1> */}
+
       <div className="bg-primary-HR min-h-screen">
         <Router>
           <UsersData>
@@ -28,8 +27,7 @@ function App() {
           </UsersData>
         </Router>
       </div>
->>>>>>> 52e2df548f056099652bf54c3b39c078312b5259
-    </>
+</>
   );
 }
 

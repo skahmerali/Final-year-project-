@@ -14,7 +14,7 @@ api.post('/signup', (req, res, next) => {
         || !req.body.userPhone
         || !req.body.userPassword
         || !req.body.gender
-        || !req.body.department) {
+        || !req.body.role) {
         res.status(403).send(`
         please send complete information
         e.g:
@@ -24,7 +24,7 @@ api.post('/signup', (req, res, next) => {
             "password": "1234",
             "phone": "03462858293",
             "gender": "male",
-            "department": "teacher"
+            "role": "teacher"
 
         }`);
         return
@@ -33,9 +33,6 @@ api.post('/signup', (req, res, next) => {
 
 
     userModle.findOne({ email: req.body.userEmail }, function (err, data) {
-
-
-
         if (err) {
             console.log(err)
             // res.send(err)
@@ -48,7 +45,7 @@ api.post('/signup', (req, res, next) => {
                     "password": HashPassword,
                     "phone": req.body.userPhone,
                     "gender": req.body.userGender,
-                    "department" : req.body.userDepartment
+                    "role" : req.body.role
                 });
 
                 newUaser.save((err, data) => {
@@ -66,8 +63,6 @@ api.post('/signup', (req, res, next) => {
                 });
 
             })
-
-
         } else if (err) {
             res.status(500).send({
                 message: "db error"
@@ -87,6 +82,7 @@ api.post('/signup', (req, res, next) => {
 api.post("/login", (req, res, next) => {
     var userEmail = req.body.email;
     var userPassword = req.body.password;
+    // var userRole = req.body.role;
     // console.log(userEmail)
     // console.log(userPassword)
 
@@ -96,7 +92,7 @@ api.post("/login", (req, res, next) => {
             please send email and passwod in json body.
             e.g:
             {
-                "email": "malikasinger@gmail.com",
+                "email": "ahmer@gmail.com",
                 "password": "abc",
             }`)
         return;
@@ -112,9 +108,9 @@ api.post("/login", (req, res, next) => {
                 console.log(err)
             } else if (loginRequestUser) {
 
-                console.log(loginRequestUser)
+                // console.log(loginRequestUser)
 
-                bcrypt.varifyHash(userPassword, loginRequestUser.password).then(match => {
+                bcrypt.varifyHash(userPassword, loginRequestUser.password).then((match) => {
 
                     if (match) {
 
@@ -126,7 +122,6 @@ api.post("/login", (req, res, next) => {
                             ip: req.connection.remoteAddress
 
                         }, SERVER_SECRET);
-
                         res.cookie('jToken', token, {
                             maxAge: 86_400_000,
                             httpOnly: true
@@ -176,4 +171,4 @@ api.post("/logout", (req, res, next) => {
 })
 
 
-module.exports = api
+module.exports=api
