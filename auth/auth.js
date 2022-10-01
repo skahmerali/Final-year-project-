@@ -12,17 +12,9 @@ api.post('/signup', (req, res, next) => {
     if (!req.body.userName
         || !req.body.userEmail
         || !req.body.userPhone
-<<<<<<< HEAD
-        || !req.body.userPassword) {
-=======
         || !req.body.userPassword
         || !req.body.gender
-<<<<<<< HEAD
         || !req.body.role) {
-=======
-        || !req.body.department) {
->>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
->>>>>>> ef52c2a8bef49645fa653ea358b261e09ada758b
         res.status(403).send(`
         please send complete information
         e.g:
@@ -30,14 +22,7 @@ api.post('/signup', (req, res, next) => {
             "name": "xyz",
             "email": "xyz@gmail.com",
             "password": "1234",
-<<<<<<< HEAD
             "phone": "01312314",
-=======
-            "phone": "03462858293",
-            "gender": "male",
-            "role": "teacher"
-
->>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
         }`);
         return
     };
@@ -47,10 +32,6 @@ api.post('/signup', (req, res, next) => {
     userModle.findOne({ email: req.body.userEmail }, function (err, data) {
         if (err) {
             console.log(err)
-<<<<<<< HEAD
-=======
-            // res.send(err)
->>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
         } else if (!data) {
 
             bcrypt.stringToHash(req.body.userPassword).then(function (HashPassword) {
@@ -89,7 +70,6 @@ api.post('/signup', (req, res, next) => {
 =======
 
 
-<<<<<<< HEAD
         } else if (err){
             res.status(500).send({
                 message:"db error"
@@ -193,11 +173,7 @@ api.post("/login", (req, res, next) => {
 
 
 
-<<<<<<< HEAD
 api.post("/logout",(req, res, next) =>{
-=======
-api.post("/logout", (req, res, next) => {
->>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
 
     res.cookie('jToken', "", {
         maxAge: 86_400_000,
