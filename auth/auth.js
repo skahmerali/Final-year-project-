@@ -3,7 +3,15 @@ var bcrypt = require("bcrypt-inzi");
 var jwt = require('jsonwebtoken');
 
 var SERVER_SECRET = process.env.SECRET || "3456";
+
+
+var { userModle } = require("../dbrepo/modles")
+
+var { userModle } = require("./../dbrepo/db")
+
+
 var {userModle} = require("../dbrepo/modles")
+
 var api = express.Router()
 
 
@@ -13,6 +21,32 @@ api.post('/signup', (req, res, next) => {
         || !req.body.userEmail
         || !req.body.userPhone
         || !req.body.userPassword
+
+        || !req.body.userRole
+        || !req.body.gender) {
+        res.status(403).send(`
+            please send complete information
+            e.g:
+            {
+                "name": "xyz",
+                "email": "xyz@gmail.com",
+                "password": "1234",
+                "phone": "03462858293",
+                "gender": "male",
+                "role": "teacher"
+ 
+            }`);
+
+
+
+        userModle.findOne({ email: req.body.userEmail }, function (err, data) {
+            if (err) {
+                console.log(err)
+
+                // res.send(err)
+
+            } else if (!data) {
+
         || !req.body.gender
         || !req.body.role) {
         res.status(403).send(`
@@ -40,15 +74,13 @@ api.post('/signup', (req, res, next) => {
                     "email": req.body.userEmail,
                     "password": HashPassword,
                     "phone": req.body.userPhone,
-<<<<<<< HEAD
-=======
+
                     "gender": req.body.userGender,
-<<<<<<< HEAD
+
                     "role" : req.body.role
-=======
+
                     "department" : req.body.userDepartment
->>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
->>>>>>> ef52c2a8bef49645fa653ea358b261e09ada758b
+
                 });
 
                 newUaser.save((err, data) => {
@@ -63,32 +95,70 @@ api.post('/signup', (req, res, next) => {
                         })
                     };
 
-                });
 
-            })
-<<<<<<< HEAD
-=======
+                bcrypt.stringToHash(req.body.userPassword).then(function (HashPassword) {
+                    var newUaser = new userModle({
+                        "name": req.body.userName,
+                        "email": req.body.userEmail,
+                        "password": HashPassword,
+                        "phone": req.body.userPhone,
 
+                        "gender": req.body.userGender,
+
+                        "role": req.body.role,
+
+
+                        "department": req.body.userDepartment
 
         } else if (err){
             res.status(500).send({
                 message:"db error"
-=======
->>>>>>> ef52c2a8bef49645fa653ea358b261e09ada758b
+
         } else if (err) {
             res.status(500).send({
                 message: "db error"
->>>>>>> cb11b70b5eb33a642f5676c9712a1049a12b0ba8
+
             })
         } else {
 
-            res.status(403).send({
-                message: "User already exist"
-            })
-        }
-    })
+
+                    });
+                    newUaser.save((err, data) => {
+                        if (!err) {
+                            res.status(200).send({
+                                message: "User created"
+                            })
+                        } else {
+                            console.log(err)
+                            res.status(403).send({
+                                message: "user already exist"
+                            })
+                        };
+
+                    });
+
+                })
 
 
+            } else if (err) {
+                res.status(500).send({
+                    message: "db error"
+                })
+            } else if (err) {
+                res.status(500).send({
+                    message: "db error"
+                })
+            }
+            else {
+
+                res.status(403).send({
+                    message: "User already exist"
+                })
+            }
+        })
+
+
+    }
 });
 
 
@@ -173,7 +243,11 @@ api.post("/login", (req, res, next) => {
 
 
 
+
+api.post("/logout", (req, res, next) => {
+=======
 api.post("/logout",(req, res, next) =>{
+
 
     res.cookie('jToken', "", {
         maxAge: 86_400_000,
@@ -184,4 +258,4 @@ api.post("/logout",(req, res, next) =>{
 })
 
 
-module.exports=api
+module.exports = api
