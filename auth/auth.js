@@ -4,9 +4,13 @@ var jwt = require('jsonwebtoken');
 
 var SERVER_SECRET = process.env.SECRET || "3456";
 
+
 var { userModle } = require("../dbrepo/modles")
 
 var { userModle } = require("./../dbrepo/db")
+
+
+var {userModle} = require("../dbrepo/modles")
 
 var api = express.Router()
 
@@ -17,6 +21,7 @@ api.post('/signup', (req, res, next) => {
         || !req.body.userEmail
         || !req.body.userPhone
         || !req.body.userPassword
+
         || !req.body.userRole
         || !req.body.gender) {
         res.status(403).send(`
@@ -42,6 +47,55 @@ api.post('/signup', (req, res, next) => {
 
             } else if (!data) {
 
+        || !req.body.gender
+        || !req.body.role) {
+        res.status(403).send(`
+        please send complete information
+        e.g:
+        {
+            "name": "xyz",
+            "email": "xyz@gmail.com",
+            "password": "1234",
+            "phone": "01312314",
+        }`);
+        return
+    };
+
+
+
+    userModle.findOne({ email: req.body.userEmail }, function (err, data) {
+        if (err) {
+            console.log(err)
+        } else if (!data) {
+
+            bcrypt.stringToHash(req.body.userPassword).then(function (HashPassword) {
+                var newUaser = new userModle({
+                    "name": req.body.userName,
+                    "email": req.body.userEmail,
+                    "password": HashPassword,
+                    "phone": req.body.userPhone,
+
+                    "gender": req.body.userGender,
+
+                    "role" : req.body.role
+
+                    "department" : req.body.userDepartment
+
+                });
+
+                newUaser.save((err, data) => {
+                    if (!err) {
+                        res.status(200).send({
+                            message: "User created"
+                        })
+                    } else {
+                        console.log(err)
+                        res.status(403).send({
+                            message: "user already exist"
+                        })
+                    };
+
+
                 bcrypt.stringToHash(req.body.userPassword).then(function (HashPassword) {
                     var newUaser = new userModle({
                         "name": req.body.userName,
@@ -53,7 +107,20 @@ api.post('/signup', (req, res, next) => {
 
                         "role": req.body.role,
 
+
                         "department": req.body.userDepartment
+
+        } else if (err){
+            res.status(500).send({
+                message:"db error"
+
+        } else if (err) {
+            res.status(500).send({
+                message: "db error"
+
+            })
+        } else {
+
 
                     });
                     newUaser.save((err, data) => {
@@ -176,7 +243,11 @@ api.post("/login", (req, res, next) => {
 
 
 
+
 api.post("/logout", (req, res, next) => {
+=======
+api.post("/logout",(req, res, next) =>{
+
 
     res.cookie('jToken', "", {
         maxAge: 86_400_000,
