@@ -1,126 +1,123 @@
 import React from "react";
 import { style } from "./Style";
-import { Link } from "react-scroll";
-import { Link as LinkRouter } from "react-router-dom";
+// import { Link } from "react-scroll";
+import { NavLink } from "react-router-dom";
 import Button from "../button/Button";
+import { FaAlignJustify, FaRegWindowClose } from "react-icons/fa";
+
+const MENU_ITEMS = [
+  { id: "/", label: "Home" },
+  { id: "News", label: "News" },
+  { id: "AboutUs", label: "About Us" },
+  { id: "Contact", label: "Contact Us" },
+  { id: "Blogs", label: "Blogs" },
+];
 
 export default function Navbar() {
+  const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
     <>
-      {/* <!-- Slider Component Container --> */}
-      <div className="flex flex-col items-center   justify-center ">
-        {/* <div className="flex flex-col"> */}
-        {/* <!-- Page Scroll Progress --> */}
-        {/* <div className="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5 bg-primary-zinc"></div> */}
-        {/* </div> */}
+      <nav className="flex ">
+        <div
+          className="flex py-4  md:mx-auto md:justify-around justify-center bg-secondary-white/90  border-b
+         border-primary-zinc backdrop-blur-md shadow-md w-full fixed top-0 left-0 right-0 z-10"
+        >
+          {/* <!-- Logo --> */}
 
-        {/* <!-- Navbar --> */}
-        <div className="">
-          <nav className={style.mainNav}>
-            {/* <!-- Logo Container --> */}
-            <ul className="flex items-center">
-              {/* <!-- Logo --> */}
-              <LinkRouter to="/">
-                <li className="cursor-pointer">
-                  <h3 className="text-2xl uppercase font-bold text-primary-zinc">
-                    SK tech
-                    {/* <img
-                  className="h-10 object-cover"
-                  src="https://stackoverflow.design/assets/img/logos/so/logo-stackoverflow.svg"
-                  alt="Store Logo"
-                /> */}
-                  </h3>
-                </li>
-              </LinkRouter>
+          <h3 className="text-2xl uppercase font-bold text-primary-zinc">
+            SK tech
+          </h3>
+
+          {/* <!-- Links Section --> */}
+
+          <div className="flex w-1/2  flex-row-reverse  md:flex  md:w-max md:flex-row ">
+            <ul className="items-center hidden active:text-red space-x-8 md:flex md">
+              {MENU_ITEMS?.map((item, ind) => {
+                return (
+                  <NavLink
+                    to={item.id}
+                    key={ind}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "underline ring-offset-8 decoration-2 decoration-primary-zinc underline-offset-8"
+                        : undefined
+                    }
+                  >
+                    <li className={style.list}>{item.label}</li>
+                  </NavLink>
+                );
+              })}
             </ul>
+          </div>
 
-            {/* <!-- Links Section --> */}
-            <ul className="items-center hidden space-x-8 lg:flex">
-              <LinkRouter to="/">
-                <li className={style.listHome}>Home</li>
-              </LinkRouter>
+          {/* <!-- Login --> */}
+          <div className="flex items-center">
+            <button
+              className={`block  cursor-pointer rounded border border-solid border-transparent bg-transparent px-2 py-1 
+              text-xl leading-none outline-none focus:outline-none md:hidden md:px-3 lg:hidden ${
+                navbarOpen && "hidden"
+              }`}
+              type="button"
+              onClick={() => setNavbarOpen(true)}
+            >
+              <FaAlignJustify className="h-5 w-5" />
+            </button>
 
-              <li className={style.list}>
-                <Link
-                  to="HomeNews"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  offset={-150}
-                >
-                  News
-                </Link>
-              </li>
-              <li className={style.list}>
-                <Link
-                  to="contact"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  offset={-150}
-                >
-                  Contact
-                </Link>
-              </li>
-              <li className={style.list}>
-                <Link
-                  to="HomeBlogs"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  offset={-150}
-                >
-                  Blog
-                </Link>
-              </li>
-              <Link
-                to="HomeAbout"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-50}
-              >
-                <li className={style.list}>About Us</li>
-              </Link>
-            </ul>
-
-            {/* <!-- Icon Menu Section --> */}
-            <div className="flex items-center space-x-5">
-              {/* <!-- Register --> */}
-              <LinkRouter to="/signup" className={style.list}>
-                <svg
-                  className="fill-current h-5 w-5 mr-2 mt-0.5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  // xmlns:xlink="http://www.w3.org/1999/xlink"
-                  version="1.1"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 0L11.34 .03L15.15 3.84L16.5 2.5C19.75 4.07 22.09 7.24 22.45 11H23.95C23.44 4.84 18.29 0 12 0M12 4C10.07 4 8.5 5.57 8.5 7.5C8.5 9.43 10.07 11 12 11C13.93 11 15.5 9.43 15.5 7.5C15.5 5.57 13.93 4 12 4M12 6C12.83 6 13.5 6.67 13.5 7.5C13.5 8.33 12.83 9 12 9C11.17 9 10.5 8.33 10.5 7.5C10.5 6.67 11.17 6 12 6M.05 13C.56 19.16 5.71 24 12 24L12.66 23.97L8.85 20.16L7.5 21.5C4.25 19.94 1.91 16.76 1.55 13H.05M12 13C8.13 13 5 14.57 5 16.5V18H19V16.5C19 14.57 15.87 13 12 13M12 15C14.11 15 15.61 15.53 16.39 16H7.61C8.39 15.53 9.89 15 12 15Z" />
-                </svg>
-                Register
-              </LinkRouter>
-
-              {/* <!-- Login --> */}
-              <LinkRouter to="/login" className={style.listLogin}>
-                <svg
-                  className="fill-current h-5 w-5 mr-2 mt-0.5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  // xmlns:xlink="http://www.w3.org/1999/xlink"
-                  version="1.1"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M10,17V14H3V10H10V7L15,12L10,17M10,2H19A2,2 0 0,1 21,4V20A2,2 0 0,1 19,22H10A2,2 0 0,1 8,20V18H10V20H19V4H10V6H8V4A2,2 0 0,1 10,2Z" />
-                </svg>
-                Login
-              </LinkRouter>
-            </div>
-          </nav>
+            <NavLink
+              to="/login"
+              className="flex text-secondary-black  
+              cursor-pointer transition-colors duration-300 font-semibold"
+            >
+              <button className="w-28 h-9  bg-primary-zinc ">Login</button>
+            </NavLink>
+          </div>
         </div>
-      </div>
+      </nav>
+
+      {navbarOpen ? (
+        <>
+          <div className="items-center relative">
+            <div
+              className={`
+            "fixed mt-20 w-5/6 sm:items-center sm:mt-28 md:hidden -z-40 m-0 p-0  transition-all duration-1000 "
+            ${
+              (navbarOpen && "top-0  left-0 w-7/12 ",
+              !navbarOpen && "-left-full w-6/12")
+            }`}
+            >
+              <div className="absolute right-9 -top-3 ">
+                <button
+                  onClick={() => setNavbarOpen(false)}
+                  className="cursor-pointer mt-10"
+                >
+                  <FaRegWindowClose className="h-5 w-5  text-black" />
+                </button>
+              </div>
+              <ul className="flex list-none justify-center flex-col pt-6 ">
+                {MENU_ITEMS?.map((item, ind) => {
+                  return (
+                    <NavLink
+                      to={item.id}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "underline text-red-600 ring-offset-8 decoration-2 decoration-primary-zinc underline-offset-8"
+                          : undefined
+                      }
+                    >
+                      <li
+                        className="mx-auto flex sm:w-11/12 items-center ml-16 sm:ml-24  justify-center divide-y border-b-2 border-solid p-4 active:text-primary"
+                        key={ind}
+                      >
+                        {item.label}
+                      </li>
+                    </NavLink>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+        </>
+      ) : null}
     </>
   );
 }
