@@ -9,6 +9,7 @@ function App() {
       <div className="bg-primary-HR min-h-screen">
         <Router>
           <UsersData>
+            <Navbar />
             <div className="container  mx-auto ">
               <MainRoutes />
             </div>
