@@ -1,7 +1,7 @@
 import React from "react";
 import { style } from "./Style";
 // import { Link } from "react-scroll";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Button from "../button/Button";
 import { FaAlignJustify, FaRegWindowClose } from "react-icons/fa";
 
@@ -15,6 +15,12 @@ const MENU_ITEMS = [
 
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/Login");
+  };
+
   return (
     <>
       <nav className="flex ">
@@ -68,7 +74,9 @@ export default function Navbar() {
               className="flex text-secondary-black  
               cursor-pointer transition-colors duration-300 font-semibold"
             >
-              <button className="w-28 h-9  bg-primary-zinc ">Login</button>
+              <button className="w-28 h-9  bg-primary-zinc " onClick={login}>
+                Login
+              </button>
             </NavLink>
           </div>
         </div>

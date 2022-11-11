@@ -2,7 +2,7 @@ import React from "react";
 import About from "../../../../components/About/About";
 import Carousal from "../../../../components/carousal/Carousal";
 import { Data } from "../../../../components/carousal/CarousalData";
-import Fqa from "../../../../components/FQA/Fqa";
+import Fqa from "../../../../components/Card/Fqa";
 
 const data = {
   para: "who i am",
@@ -28,7 +28,7 @@ const Home = () => {
           <Carousal slides={Data} />
         </div>
       </div>
-      <div className="flex justify-center ">
+      <div className=" flex justify-center  ">
         <div className="w-4/6 h-auto mt-0">
           <About
             para={data.para}

@@ -3,85 +3,82 @@ import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../context/Context";
+import { Formik, Form } from "formik";
+import { signinValidation, SigninValues } from "../../../components/yup/Yup";
+import FormikInput from "../../../components/input/FormikInput";
 
 const Login = () => {
+  // const SigninValues = { email: "", password: "" };
   const navigate = useNavigate();
   const { loginData, setLoginData } = useContext(UserContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // console.log(loginData);
+  console.log({ loginData });
 
-  const login = (e) => {
-    e.preventDefault();
-    setLoginData({ email, password });
-    return loginData;
+  const handlelog = () => {
+    // navigate("/Signup");
   };
-
-  // const handleChange = (e) => {
-  //   setLoginData({
-  //     ...loginData,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
 
   return (
     <>
-      <div className="flex-center ">
-        <div className="mt-48 rounded-md px-20 py-2 backdrop-blur-md shadow-lg bg-secondary-white ">
-          <h1 className="text-center text-3xl mt-3  font-bold">Login</h1>
-          <div className="mt-6">
-            <div>
-              <div
-                className="text-sm font-bold 
-                tracking-wide"
-              >
-                Email Address
-              </div>
-              <Input
-                style="w-80"
-                type={"text"}
-                placeholder={"Enter Email"}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                name={"Email"}
+      <div className="flex h-auto items-center justify-center ">
+        <Formik
+          initialValues={SigninValues}
+          validationSchema={signinValidation}
+          onSubmit={(values, actions) => {
+            console.log({ values, actions });
+            setLoginData(values);
+            actions.setSubmitting(false);
+            actions.resetForm();
+          }}
+        >
+          <Form className=" mt-36 rounded-md xl:w-1/3 lg:w-5/12 md:w-7/12 w-4/5  py-3 px-12 shadow-2xl bg-secondary-white">
+            <h2 className="py-0 text-4xl font-bold text-center">Login</h2>
+            {/* <div className="flex justify-between py-8">
+              <p className="relative flex items-center px-6 py-2 border shadow-lg hover:shadow-xl">
+                <AiFillFacebook className="mr-2" /> Facebook
+              </p>
+              <p className="relative flex items-center px-6 py-2 border shadow-lg hover:shadow-xl">
+                <FcGoogle className="mr-2" /> Google
+              </p>
+            </div> */}
+            <div className="flex flex-col mb-4 mt-4">
+              <FormikInput
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                ErrorName="email"
               />
             </div>
-            <div className="mt-7">
-              <div className="flex justify-between items-center">
-                <div
-                  className="text-sm font-bold 
-                tracking-wide"
-                >
-                  Password
-                </div>
-              </div>
-              <Input
-                type={"password"}
-                placeholder={"Enter Password"}
-                onChange={(e) => setPassword(e.target.value)}
-                name={"Password"}
-                required
+
+            <div className="flex flex-col mb-8">
+              <FormikInput
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                ErrorName="password"
               />
             </div>
-            <div className="mt-5">
-              <Button title={"Login"} onClick={login} style="" />
+
+            <div className="mt-4 w-16">
+              <Button title="Login" type="submit" onClick={handlelog} />
             </div>
-          </div>
-          <div
-            className=" text-sm mt-4 mb-3
-           font-display font-semibold  "
-          >
-            Don't have an account ?
-            <Link
-              to="/SignUp"
-              className="cursor-pointer 
-             text-indigo-600 hover:text-indigo-800"
+            <div
+              className=" text-sm mt-4 mb-3
+            font-display font-semibold  "
             >
-              {" "}
-              Sign up
-            </Link>
-          </div>
-        </div>
+              Have an account ?
+              <Link
+                to="/Signup"
+                className="cursor-pointer 
+              text-indigo-600 hover:text-indigo-800"
+              >
+                {" "}
+                SignUp
+              </Link>
+            </div>
+          </Form>
+        </Formik>
       </div>
     </>
   );
